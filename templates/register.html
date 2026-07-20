@@ -1,43 +1,90 @@
 {% extends "base.html" %}
 
-
 {% block content %}
 
-<h1>Create Account</h1>
+<div class="auth-page">
 
+    <div class="auth-card">
 
-<form method="POST">
+        <div class="logo-circle">
+            <i class="bi bi-person-plus-fill"></i>
+        </div>
 
-    <input 
-        type="text"
-        name="username"
-        placeholder="Username"
-        required
-    >
+        <h2>Create Account</h2>
 
+        <p class="subtitle">
+            Join GapGram
+        </p>
 
-    <input 
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-    >
+        <form method="POST">
 
+            <div class="mb-3">
 
-    <input 
-        type="password"
-        name="password"
-        placeholder="Password"
-        required
-    >
+                <label class="form-label">
+                    Username
+                </label>
 
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    required
+                >
 
-    <button>
-        Register
-    </button>
+            </div>
 
+            <div class="mb-3">
 
-</form>
+                <label class="form-label">
+                    Email
+                </label>
 
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+            <button class="btn btn-primary auth-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <div class="mt-4 text-center">
+
+            Already have an account?
+
+            <a href="/login">
+
+                Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

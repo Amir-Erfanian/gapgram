@@ -1,29 +1,92 @@
 {% extends "base.html" %}
 
-
 {% block content %}
 
-<h1>Users</h1>
+<div class="users-page">
 
+    <div class="sidebar">
 
-<ul>
+        <div class="sidebar-header">
 
-{% for user in users %}
+            <h4>
+                <i class="bi bi-chat-dots-fill"></i>
+                Chats
+            </h4>
 
-<li>
+        </div>
 
-    {{ user.username }}
+        <div class="search-box">
 
-    <a href="/chat/{{ user.id }}">
-        Chat
-    </a>
+            <i class="bi bi-search"></i>
 
-</li>
+            <input type="text" placeholder="Search...">
 
+        </div>
 
-{% endfor %}
+        <div class="chat-list">
 
-</ul>
+            {% for user in users %}
 
+            <a href="/chat/{{ user.id }}" class="chat-item">
+
+                <div class="avatar">
+
+                    {{ user.username[0]|upper }}
+
+                </div>
+
+                <div class="chat-info">
+
+                    <div class="chat-name">
+
+                        {{ user.username }}
+
+                    </div>
+
+                    <div class="chat-preview">
+
+                        Start a conversation
+
+                    </div>
+
+                </div>
+
+                <div class="chat-arrow">
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </div>
+
+            </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    <div class="welcome-panel">
+
+        <div>
+
+            <i class="bi bi-chat-square-dots-fill display-1 text-primary"></i>
+
+            <h2 class="mt-4">
+
+                Welcome to GapGram
+
+            </h2>
+
+            <p>
+
+                Select a conversation from the left.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
