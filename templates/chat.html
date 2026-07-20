@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+<h1>Chat with {{ user.username }}</h1>
+
+<script>
+    const room ="chat_" + Math.min({{ current_user.id }}, {{ user.id }}) + "_" + Math.max({{ current_user.id }}, {{ user.id }});
+
+    socket.emit("join", {room: room});
+</script>
+
+<div class="chat" id="chatBox">
+
+    {% for message in messages %}
+
+        <p>
+
+            {% if message.sender_id == current_user.id %}
+                <b>You:</b>
+            {% else %}
+                <b>{{ user.username }}:</b>
+            {% endif %}
+
+            {{ message.text }}
+
+        </p>
+
+    {% endfor %}
+
+</div>
+
+<form id="messageForm">
+
+    <input
+        id="messageInput"
+        type="text"
+        placeholder="Message..."
+        autocomplete="off"
+        required
+    >
+
+    <button type="submit">
+        Send
+    </button>
+
+</form>
+
+<script>
+
+const form = document.getElementById("messageForm");
+const input = document.getElementById("messageInput");
+const chatBox = document.getElementById("chatBox");
+
+form.addEventListener("submit", function(e) {
+
+    console.log("Submit fired");
+
+    e.preventDefault();
+
+    if (input.value.trim() === "") {
+        console.log("Empty message");
+        return;
+    }
+
+    console.log("About to emit");
+
+    socket.emit("send_message", {
+        room: room,
+        sender_id: {{ current_user.id }},
+        receiver_id: {{ user.id }},
+        text: input.value
+    });
+
+    console.log("Emit finished");
+
+    input.value = "";
+});
+
+socket.on("receive_message", function(data) {
+
+    const p = document.createElement("p");
+
+    if (data.sender_id == {{ current_user.id }}) {
+        p.innerHTML = "<b>You:</b> " + data.text;
+    } else {
+        p.innerHTML = "<b>{{ user.username }}:</b> " + data.text;
+    }
+
+    chatBox.appendChild(p);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+});
+
+</script>
+
+{% endblock %}
